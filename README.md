@@ -13,9 +13,10 @@ This is a fully connected prototype for Leadwise International Consultancy Servi
    - Login button to access portal
 
 2. **login.html** - Login Portal
-   - Entry point for authentication
-   - Choose between Applicant and Admin roles
-   - Quick access links to all pages
+   - Automatic role detection based on email
+   - Admin emails route to admin panel
+   - Regular emails route to applicant dashboard
+   - Demo credentials provided
 
 3. **applicant-dashboard.html** - Applicant Portal
    - Dashboard with application statistics
@@ -36,8 +37,10 @@ This is a fully connected prototype for Leadwise International Consultancy Servi
 1. Open **index.html** to start (public home page)
 2. Browse the website and explore services
 3. Click "Login" in the navigation menu
-4. Select your role (Applicant or Admin)
-5. Click "Sign In" to access the respective dashboard
+4. Enter credentials (system automatically detects if you're admin or applicant)
+   - Use **admin@leadwise.com** to access admin panel
+   - Use **john@email.com** to access applicant dashboard
+   - Any password works in demo mode
 
 ### Navigation Flow
 ```
@@ -58,6 +61,12 @@ index.html (Public Website - START HERE)
 - Working contact form with success message
 - Responsive design
 - Login button redirects to login portal
+
+#### Login Portal (login.html)
+- Automatic user type detection based on email
+- Emails containing "admin" or "@leadwise.com" → Admin Panel
+- All other emails → Applicant Dashboard
+- Demo credentials provided for testing
 
 #### Applicant Dashboard (applicant-dashboard.html)
 - Real-time statistics display
@@ -108,6 +117,13 @@ This is a prototype, so:
 - All data is static (for demonstration)
 - No backend server required
 
+### Authentication Logic
+The login system automatically routes users based on their email:
+- **Admin access**: Emails containing "admin" OR ending with "@leadwise.com"
+- **Applicant access**: All other email addresses
+- Password validation is not enforced in demo mode
+- In production, replace with proper authentication service
+
 ## Browser Compatibility
 
 Works best in modern browsers:
@@ -119,11 +135,11 @@ Works best in modern browsers:
 ## Customization
 
 To customize for production:
-1. Replace static data with API calls
-2. Add authentication logic in login.html
+1. Replace email-based routing with proper authentication API
+2. Add secure password validation and session management
 3. Connect forms to backend services
 4. Implement actual file upload/download
-5. Add data persistence
+5. Add data persistence and database integration
 
 ## Color Scheme
 
