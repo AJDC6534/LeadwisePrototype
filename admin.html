@@ -1,0 +1,784 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Panel - Leadwise</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: #f5f7fa;
+            color: #333;
+        }
+
+        .admin-header {
+            background: linear-gradient(135deg, #1e3a8a 0%, #0ea5e9 100%);
+            color: white;
+            padding: 1rem 2rem;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+
+        .header-content {
+            max-width: 1600px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            font-size: 1.5rem;
+            font-weight: bold;
+        }
+
+        .admin-info {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+
+        .admin-avatar {
+            width: 40px;
+            height: 40px;
+            background: white;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #1e3a8a;
+            font-weight: bold;
+        }
+
+        .dashboard-container {
+            max-width: 1600px;
+            margin: 2rem auto;
+            padding: 0 2rem;
+        }
+
+        .page-title {
+            margin-bottom: 2rem;
+        }
+
+        .page-title h1 {
+            color: #1e3a8a;
+            margin-bottom: 0.5rem;
+        }
+
+        .page-title p {
+            color: #666;
+        }
+
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+            gap: 1.5rem;
+            margin-bottom: 2rem;
+        }
+
+        .stat-card {
+            background: white;
+            padding: 1.5rem;
+            border-radius: 10px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+
+        .stat-icon {
+            width: 60px;
+            height: 60px;
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.8rem;
+        }
+
+        .stat-icon.blue {
+            background: linear-gradient(135deg, #dbeafe 0%, #bfdbfe 100%);
+        }
+
+        .stat-icon.yellow {
+            background: linear-gradient(135deg, #fef3c7 0%, #fde68a 100%);
+        }
+
+        .stat-icon.green {
+            background: linear-gradient(135deg, #d1fae5 0%, #a7f3d0 100%);
+        }
+
+        .stat-icon.red {
+            background: linear-gradient(135deg, #fee2e2 0%, #fecaca 100%);
+        }
+
+        .stat-info {
+            flex: 1;
+        }
+
+        .stat-number {
+            font-size: 2rem;
+            font-weight: bold;
+            color: #1e3a8a;
+        }
+
+        .stat-label {
+            color: #666;
+            font-size: 0.9rem;
+        }
+
+        .main-content {
+            background: white;
+            border-radius: 10px;
+            padding: 2rem;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+        }
+
+        .content-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 1.5rem;
+            flex-wrap: wrap;
+            gap: 1rem;
+        }
+
+        .content-header h2 {
+            color: #1e3a8a;
+        }
+
+        .filter-controls {
+            display: flex;
+            gap: 1rem;
+            flex-wrap: wrap;
+        }
+
+        .filter-controls select,
+        .filter-controls input {
+            padding: 0.6rem 1rem;
+            border: 2px solid #e2e8f0;
+            border-radius: 8px;
+            font-size: 0.9rem;
+            background: white;
+        }
+
+        .filter-controls select:focus,
+        .filter-controls input:focus {
+            outline: none;
+            border-color: #0ea5e9;
+        }
+
+        .btn-export {
+            background: #22c55e;
+            color: white;
+            padding: 0.6rem 1.5rem;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            font-weight: 600;
+            transition: transform 0.3s;
+        }
+
+        .btn-export:hover {
+            transform: translateY(-2px);
+        }
+
+        .applications-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 1rem;
+        }
+
+        .applications-table th {
+            background: #f8fafc;
+            padding: 1rem;
+            text-align: left;
+            color: #1e3a8a;
+            font-weight: 600;
+            border-bottom: 2px solid #e2e8f0;
+            white-space: nowrap;
+        }
+
+        .applications-table td {
+            padding: 1rem;
+            border-bottom: 1px solid #e2e8f0;
+        }
+
+        .applications-table tr:hover {
+            background: #f8fafc;
+        }
+
+        .applicant-info {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+        }
+
+        .applicant-avatar {
+            width: 35px;
+            height: 35px;
+            background: linear-gradient(135deg, #0ea5e9 0%, #1e3a8a 100%);
+            color: white;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+            font-size: 0.85rem;
+        }
+
+        .applicant-name {
+            font-weight: 600;
+            color: #1e3a8a;
+        }
+
+        .applicant-email {
+            font-size: 0.85rem;
+            color: #666;
+        }
+
+        .status-badge {
+            display: inline-block;
+            padding: 0.4rem 0.8rem;
+            border-radius: 20px;
+            font-size: 0.85rem;
+            font-weight: 600;
+            white-space: nowrap;
+        }
+
+        .status-submitted {
+            background: #dbeafe;
+            color: #1e40af;
+        }
+
+        .status-review {
+            background: #fef3c7;
+            color: #92400e;
+        }
+
+        .status-approved {
+            background: #d1fae5;
+            color: #065f46;
+        }
+
+        .status-rejected {
+            background: #fee2e2;
+            color: #991b1b;
+        }
+
+        .priority-high {
+            background: #fee2e2;
+            color: #991b1b;
+        }
+
+        .priority-medium {
+            background: #fef3c7;
+            color: #92400e;
+        }
+
+        .priority-low {
+            background: #e0f2fe;
+            color: #075985;
+        }
+
+        .action-buttons {
+            display: flex;
+            gap: 0.5rem;
+        }
+
+        .action-btn {
+            padding: 0.5rem 1rem;
+            border: none;
+            border-radius: 6px;
+            cursor: pointer;
+            font-size: 0.85rem;
+            font-weight: 600;
+            transition: all 0.3s;
+        }
+
+        .btn-view {
+            background: #0ea5e9;
+            color: white;
+        }
+
+        .btn-view:hover {
+            background: #0284c7;
+        }
+
+        .btn-update {
+            background: #f59e0b;
+            color: white;
+        }
+
+        .btn-update:hover {
+            background: #d97706;
+        }
+
+        .pagination {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 0.5rem;
+            margin-top: 2rem;
+        }
+
+        .pagination button {
+            padding: 0.5rem 1rem;
+            border: 2px solid #e2e8f0;
+            background: white;
+            border-radius: 6px;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+
+        .pagination button:hover {
+            border-color: #0ea5e9;
+            background: #f0f9ff;
+        }
+
+        .pagination button.active {
+            background: #0ea5e9;
+            color: white;
+            border-color: #0ea5e9;
+        }
+
+        .quick-actions {
+            background: white;
+            border-radius: 10px;
+            padding: 1.5rem;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+            margin-top: 2rem;
+        }
+
+        .quick-actions h3 {
+            color: #1e3a8a;
+            margin-bottom: 1rem;
+        }
+
+        .quick-actions-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 1rem;
+        }
+
+        .quick-action-btn {
+            padding: 1rem;
+            border: 2px solid #e2e8f0;
+            background: white;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: all 0.3s;
+            text-align: center;
+            font-weight: 600;
+            color: #1e3a8a;
+        }
+
+        .quick-action-btn:hover {
+            border-color: #0ea5e9;
+            background: #f0f9ff;
+            transform: translateY(-2px);
+        }
+
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0,0,0,0.5);
+            z-index: 1000;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .modal.active {
+            display: flex;
+        }
+
+        .modal-content {
+            background: white;
+            padding: 2rem;
+            border-radius: 15px;
+            max-width: 600px;
+            width: 90%;
+            max-height: 90vh;
+            overflow-y: auto;
+        }
+
+        .modal-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 1.5rem;
+        }
+
+        .modal-header h3 {
+            color: #1e3a8a;
+        }
+
+        .close-btn {
+            background: none;
+            border: none;
+            font-size: 1.5rem;
+            cursor: pointer;
+            color: #666;
+        }
+
+        .form-group {
+            margin-bottom: 1.5rem;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 0.5rem;
+            color: #1e3a8a;
+            font-weight: 600;
+        }
+
+        .form-group select,
+        .form-group textarea {
+            width: 100%;
+            padding: 0.8rem;
+            border: 2px solid #e2e8f0;
+            border-radius: 8px;
+            font-size: 1rem;
+        }
+
+        .form-group textarea {
+            resize: vertical;
+            min-height: 100px;
+        }
+
+        .modal-actions {
+            display: flex;
+            gap: 1rem;
+            justify-content: flex-end;
+        }
+
+        .btn-cancel {
+            padding: 0.8rem 1.5rem;
+            border: 2px solid #e2e8f0;
+            background: white;
+            border-radius: 8px;
+            cursor: pointer;
+            font-weight: 600;
+        }
+
+        .btn-save {
+            padding: 0.8rem 1.5rem;
+            border: none;
+            background: linear-gradient(135deg, #0ea5e9 0%, #1e3a8a 100%);
+            color: white;
+            border-radius: 8px;
+            cursor: pointer;
+            font-weight: 600;
+        }
+
+        @media (max-width: 1200px) {
+            .applications-table {
+                font-size: 0.9rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header class="admin-header">
+        <div class="header-content">
+            <div class="logo">LEADWISE Admin Panel</div>
+            <div class="admin-info">
+                <div class="admin-avatar">SA</div>
+                <div>
+                    <div style="font-weight: 600;">Sarah Admin</div>
+                    <div style="font-size: 0.85rem; opacity: 0.9;">Administrator</div>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <div class="dashboard-container">
+        <div class="page-title">
+            <h1>Application Management</h1>
+            <p>Monitor and manage all applicant submissions</p>
+        </div>
+
+        <div class="stats-grid">
+            <div class="stat-card">
+                <div class="stat-icon blue">📝</div>
+                <div class="stat-info">
+                    <div class="stat-number">247</div>
+                    <div class="stat-label">Total Applications</div>
+                </div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-icon yellow">⏳</div>
+                <div class="stat-info">
+                    <div class="stat-number">42</div>
+                    <div class="stat-label">Pending Review</div>
+                </div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-icon green">✅</div>
+                <div class="stat-info">
+                    <div class="stat-number">163</div>
+                    <div class="stat-label">Approved</div>
+                </div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-icon red">🔔</div>
+                <div class="stat-info">
+                    <div class="stat-number">12</div>
+                    <div class="stat-label">Urgent</div>
+                </div>
+            </div>
+        </div>
+
+        <div class="main-content">
+            <div class="content-header">
+                <h2>All Applications</h2>
+                <div class="filter-controls">
+                    <select>
+                        <option>All Status</option>
+                        <option>Submitted</option>
+                        <option>Under Review</option>
+                        <option>Approved</option>
+                        <option>Rejected</option>
+                    </select>
+                    <select>
+                        <option>All Countries</option>
+                        <option>Qatar</option>
+                        <option>UAE</option>
+                        <option>Saudi Arabia</option>
+                        <option>Germany</option>
+                    </select>
+                    <input type="date" placeholder="Date From">
+                    <button class="btn-export">📥 Export</button>
+                </div>
+            </div>
+
+            <table class="applications-table">
+                <thead>
+                    <tr>
+                        <th>Application ID</th>
+                        <th>Applicant</th>
+                        <th>Service Type</th>
+                        <th>Country</th>
+                        <th>Date</th>
+                        <th>Status</th>
+                        <th>Priority</th>
+                        <th>Actions</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><strong>#APP-2025-245</strong></td>
+                        <td>
+                            <div class="applicant-info">
+                                <div class="applicant-avatar">MK</div>
+                                <div>
+                                    <div class="applicant-name">Mohammed Khan</div>
+                                    <div class="applicant-email">m.khan@email.com</div>
+                                </div>
+                            </div>
+                        </td>
+                        <td>Work Visa</td>
+                        <td>🇶🇦 Qatar</td>
+                        <td>Oct 12, 2025</td>
+                        <td><span class="status-badge status-submitted">New</span></td>
+                        <td><span class="status-badge priority-high">High</span></td>
+                        <td>
+                            <div class="action-buttons">
+                                <button class="action-btn btn-view">View</button>
+                                <button class="action-btn btn-update" onclick="openModal()">Update</button>
+                            </div>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td><strong>#APP-2025-244</strong></td>
+                        <td>
+                            <div class="applicant-info">
+                                <div class="applicant-avatar">AS</div>
+                                <div>
+                                    <div class="applicant-name">Anna Schmidt</div>
+                                    <div class="applicant-email">anna.s@email.com</div>
+                                </div>
+                            </div>
+                        </td>
+                        <td>Job Placement</td>
+                        <td>🇩🇪 Germany</td>
+                        <td>Oct 11, 2025</td>
+                        <td><span class="status-badge status-review">Under Review</span></td>
+                        <td><span class="status-badge priority-medium">Medium</span></td>
+                        <td>
+                            <div class="action-buttons">
+                                <button class="action-btn btn-view">View</button>
+                                <button class="action-btn btn-update" onclick="openModal()">Update</button>
+                            </div>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td><strong>#APP-2025-243</strong></td>
+                        <td>
+                            <div class="applicant-info">
+                                <div class="applicant-avatar">RA</div>
+                                <div>
+                                    <div class="applicant-name">Rajesh Ahmed</div>
+                                    <div class="applicant-email">r.ahmed@email.com</div>
+                                </div>
+                            </div>
+                        </td>
+                        <td>Work Visa</td>
+                        <td>🇦🇪 UAE</td>
+                        <td>Oct 10, 2025</td>
+                        <td><span class="status-badge status-approved">Approved</span></td>
+                        <td><span class="status-badge priority-low">Low</span></td>
+                        <td>
+                            <div class="action-buttons">
+                                <button class="action-btn btn-view">View</button>
+                                <button class="action-btn btn-update" onclick="openModal()">Update</button>
+                            </div>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td><strong>#APP-2025-242</strong></td>
+                        <td>
+                            <div class="applicant-info">
+                                <div class="applicant-avatar">LC</div>
+                                <div>
+                                    <div class="applicant-name">Lisa Chen</div>
+                                    <div class="applicant-email">lisa.c@email.com</div>
+                                </div>
+                            </div>
+                        </td>
+                        <td>Travel Visa</td>
+                        <td>🇸🇦 Saudi Arabia</td>
+                        <td>Oct 9, 2025</td>
+                        <td><span class="status-badge status-review">Document Review</span></td>
+                        <td><span class="status-badge priority-medium">Medium</span></td>
+                        <td>
+                            <div class="action-buttons">
+                                <button class="action-btn btn-view">View</button>
+                                <button class="action-btn btn-update" onclick="openModal()">Update</button>
+                            </div>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td><strong>#APP-2025-241</strong></td>
+                        <td>
+                            <div class="applicant-info">
+                                <div class="applicant-avatar">JW</div>
+                                <div>
+                                    <div class="applicant-name">John Wilson</div>
+                                    <div class="applicant-email">j.wilson@email.com</div>
+                                </div>
+                            </div>
+                        </td>
+                        <td>Job Placement</td>
+                        <td>🇶🇦 Qatar</td>
+                        <td>Oct 8, 2025</td>
+                        <td><span class="status-badge status-approved">Approved</span></td>
+                        <td><span class="status-badge priority-low">Low</span></td>
+                        <td>
+                            <div class="action-buttons">
+                                <button class="action-btn btn-view">View</button>
+                                <button class="action-btn btn-update" onclick="openModal()">Update</button>
+                            </div>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <div class="pagination">
+                <button>Previous</button>
+                <button class="active">1</button>
+                <button>2</button>
+                <button>3</button>
+                <button>4</button>
+                <button>5</button>
+                <button>Next</button>
+            </div>
+        </div>
+
+        <div class="quick-actions">
+            <h3>Quick Actions</h3>
+            <div class="quick-actions-grid">
+                <button class="quick-action-btn">📊 Generate Report</button>
+                <button class="quick-action-btn">📧 Send Bulk Email</button>
+                <button class="quick-action-btn">👥 Add New Applicant</button>
+                <button class="quick-action-btn">⚙️ System Settings</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Update Status Modal -->
+    <div class="modal" id="updateModal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3>Update Application Status</h3>
+                <button class="close-btn" onclick="closeModal()">&times;</button>
+            </div>
+            <div class="form-group">
+                <label>Application ID</label>
+                <input type="text" value="#APP-2025-245" readonly style="width: 100%; padding: 0.8rem; border: 2px solid #e2e8f0; border-radius: 8px; background: #f8fafc;">
+            </div>
+            <div class="form-group">
+                <label>Status</label>
+                <select>
+                    <option>Submitted</option>
+                    <option>Under Review</option>
+                    <option>Document Required</option>
+                    <option>Interview Scheduled</option>
+                    <option>Approved</option>
+                    <option>Rejected</option>
+                    <option>Completed</option>
+                </select>
+            </div>
+            <div class="form-group">
+                <label>Priority</label>
+                <select>
+                    <option>Low</option>
+                    <option>Medium</option>
+                    <option>High</option>
+                    <option>Urgent</option>
+                </select>
+            </div>
+            <div class="form-group">
+                <label>Notes / Message to Applicant</label>
+                <textarea placeholder="Add any comments or instructions..."></textarea>
+            </div>
+            <div class="form-group">
+                <label>
+                    <input type="checkbox" style="width: auto; margin-right: 0.5rem;">
+                    Send email notification to applicant
+                </label>
+            </div>
+            <div class="modal-actions">
+                <button class="btn-cancel" onclick="closeModal()">Cancel</button>
+                <button class="btn-save">Save Changes</button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        function openModal() {
+            document.getElementById('updateModal').classList.add('active');
+        }
+
+        function closeModal() {
+            document.getElementById('updateModal').classList.remove('active');
+        }
+
+        // Close modal when clicking outside
+        document.getElementById('updateModal').addEventListener('click', function(e) {
+            if (e.target === this) {
+                closeModal();
+            }
+        });
+    </script>
+</body>
+</html>

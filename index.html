@@ -1,0 +1,574 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Leadwise International Consultancy Services</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            color: #333;
+        }
+
+        .header {
+            background: linear-gradient(135deg, #1e3a8a 0%, #0ea5e9 100%);
+            color: white;
+            padding: 1rem 0;
+            position: fixed;
+            width: 100%;
+            top: 0;
+            z-index: 1000;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+
+        .nav-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 2rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            font-size: 1.5rem;
+            font-weight: bold;
+            letter-spacing: 1px;
+        }
+
+        .nav-menu {
+            display: flex;
+            gap: 2rem;
+            list-style: none;
+        }
+
+        .nav-menu a {
+            color: white;
+            text-decoration: none;
+            transition: color 0.3s;
+            font-weight: 500;
+        }
+
+        .nav-menu a:hover {
+            color: #0ea5e9;
+        }
+
+        .hero {
+            background: linear-gradient(135deg, rgba(30, 58, 138, 0.95) 0%, rgba(14, 165, 233, 0.95) 100%),
+                        url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 600"><rect fill="%231e3a8a" width="1200" height="600"/><circle fill="%230ea5e9" opacity="0.1" cx="200" cy="100" r="150"/><circle fill="%230ea5e9" opacity="0.1" cx="900" cy="400" r="200"/></svg>');
+            background-size: cover;
+            background-position: center;
+            color: white;
+            padding: 150px 2rem 100px;
+            text-align: center;
+        }
+
+        .hero-content {
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        .hero h1 {
+            font-size: 3rem;
+            margin-bottom: 1rem;
+            animation: fadeInUp 1s ease;
+        }
+
+        .hero p {
+            font-size: 1.3rem;
+            margin-bottom: 2rem;
+            opacity: 0.95;
+            animation: fadeInUp 1s ease 0.2s both;
+        }
+
+        .cta-buttons {
+            display: flex;
+            gap: 1rem;
+            justify-content: center;
+            flex-wrap: wrap;
+            animation: fadeInUp 1s ease 0.4s both;
+        }
+
+        .btn {
+            padding: 1rem 2rem;
+            border-radius: 50px;
+            text-decoration: none;
+            font-weight: 600;
+            transition: all 0.3s;
+            display: inline-block;
+        }
+
+        .btn-primary {
+            background: white;
+            color: #1e3a8a;
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 10px 25px rgba(0,0,0,0.2);
+        }
+
+        .btn-secondary {
+            background: transparent;
+            color: white;
+            border: 2px solid white;
+        }
+
+        .btn-secondary:hover {
+            background: white;
+            color: #1e3a8a;
+        }
+
+        .section {
+            padding: 80px 2rem;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .section-title {
+            text-align: center;
+            font-size: 2.5rem;
+            color: #1e3a8a;
+            margin-bottom: 1rem;
+        }
+
+        .section-subtitle {
+            text-align: center;
+            color: #666;
+            margin-bottom: 3rem;
+            font-size: 1.1rem;
+        }
+
+        .services-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 2rem;
+            margin-top: 3rem;
+        }
+
+        .service-card {
+            background: white;
+            padding: 2rem;
+            border-radius: 15px;
+            box-shadow: 0 5px 20px rgba(0,0,0,0.1);
+            transition: transform 0.3s, box-shadow 0.3s;
+            text-align: center;
+        }
+
+        .service-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 15px 40px rgba(14, 165, 233, 0.3);
+        }
+
+        .service-icon {
+            width: 80px;
+            height: 80px;
+            background: linear-gradient(135deg, #0ea5e9 0%, #1e3a8a 100%);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 1.5rem;
+            font-size: 2rem;
+        }
+
+        .service-card h3 {
+            color: #1e3a8a;
+            margin-bottom: 1rem;
+            font-size: 1.5rem;
+        }
+
+        .service-card p {
+            color: #666;
+            line-height: 1.8;
+        }
+
+        .destinations {
+            background: #f8fafc;
+        }
+
+        .destinations-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 1.5rem;
+            margin-top: 3rem;
+        }
+
+        .destination-card {
+            background: white;
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: 0 3px 15px rgba(0,0,0,0.1);
+            transition: transform 0.3s;
+        }
+
+        .destination-card:hover {
+            transform: scale(1.05);
+        }
+
+        .destination-content {
+            padding: 1.5rem;
+            text-align: center;
+        }
+
+        .destination-card h3 {
+            color: #1e3a8a;
+            font-size: 1.3rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .stats {
+            background: linear-gradient(135deg, #1e3a8a 0%, #0ea5e9 100%);
+            color: white;
+            text-align: center;
+        }
+
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 3rem;
+            margin-top: 3rem;
+        }
+
+        .stat-item h3 {
+            font-size: 3rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .stat-item p {
+            font-size: 1.1rem;
+            opacity: 0.9;
+        }
+
+        .contact-section {
+            background: #f8fafc;
+        }
+
+        .contact-container {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 3rem;
+            align-items: start;
+        }
+
+        .contact-info {
+            background: white;
+            padding: 2rem;
+            border-radius: 15px;
+            box-shadow: 0 5px 20px rgba(0,0,0,0.1);
+        }
+
+        .contact-info h3 {
+            color: #1e3a8a;
+            margin-bottom: 1.5rem;
+        }
+
+        .contact-item {
+            display: flex;
+            align-items: start;
+            margin-bottom: 1.5rem;
+            gap: 1rem;
+        }
+
+        .contact-icon {
+            width: 40px;
+            height: 40px;
+            background: linear-gradient(135deg, #0ea5e9 0%, #1e3a8a 100%);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            flex-shrink: 0;
+        }
+
+        .contact-form {
+            background: white;
+            padding: 2rem;
+            border-radius: 15px;
+            box-shadow: 0 5px 20px rgba(0,0,0,0.1);
+        }
+
+        .form-group {
+            margin-bottom: 1.5rem;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 0.5rem;
+            color: #1e3a8a;
+            font-weight: 600;
+        }
+
+        .form-group input,
+        .form-group textarea,
+        .form-group select {
+            width: 100%;
+            padding: 0.8rem;
+            border: 2px solid #e2e8f0;
+            border-radius: 8px;
+            font-size: 1rem;
+            transition: border-color 0.3s;
+        }
+
+        .form-group input:focus,
+        .form-group textarea:focus,
+        .form-group select:focus {
+            outline: none;
+            border-color: #0ea5e9;
+        }
+
+        .form-group textarea {
+            resize: vertical;
+            min-height: 120px;
+        }
+
+        .submit-btn {
+            background: linear-gradient(135deg, #0ea5e9 0%, #1e3a8a 100%);
+            color: white;
+            padding: 1rem 3rem;
+            border: none;
+            border-radius: 50px;
+            font-size: 1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: transform 0.3s;
+            width: 100%;
+        }
+
+        .submit-btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 10px 25px rgba(14, 165, 233, 0.4);
+        }
+
+        .footer {
+            background: #1e3a8a;
+            color: white;
+            text-align: center;
+            padding: 2rem;
+        }
+
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @media (max-width: 768px) {
+            .hero h1 {
+                font-size: 2rem;
+            }
+
+            .hero p {
+                font-size: 1rem;
+            }
+
+            .contact-container {
+                grid-template-columns: 1fr;
+            }
+
+            .nav-menu {
+                gap: 1rem;
+                font-size: 0.9rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header class="header">
+        <nav class="nav-container">
+            <div class="logo">LEADWISE</div>
+            <ul class="nav-menu">
+                <li><a href="#home">Home</a></li>
+                <li><a href="#services">Services</a></li>
+                <li><a href="#destinations">Destinations</a></li>
+                <li><a href="#contact">Contact</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <section id="home" class="hero">
+        <div class="hero-content">
+            <h1>Bridging Talent with Opportunity</h1>
+            <p>Your trusted partner for seamless job placement in Qatar, Europe, and beyond. Professional visa and travel services for a global workforce.</p>
+            <div class="cta-buttons">
+                <a href="#services" class="btn btn-primary">Explore Services</a>
+                <a href="#contact" class="btn btn-secondary">Get Started</a>
+            </div>
+        </div>
+    </section>
+
+    <section id="services" class="section">
+        <h2 class="section-title">Our Services</h2>
+        <p class="section-subtitle">Comprehensive solutions for your international career journey</p>
+        <div class="services-grid">
+            <div class="service-card">
+                <div class="service-icon">💼</div>
+                <h3>Job Placement</h3>
+                <p>Connect with top employers across Qatar, Europe, and global markets. We match your skills with the perfect opportunity.</p>
+            </div>
+            <div class="service-card">
+                <div class="service-icon">🌍</div>
+                <h3>Visa Services</h3>
+                <p>Expert visa processing and documentation support for work permits, business visas, and travel authorizations.</p>
+            </div>
+            <div class="service-card">
+                <div class="service-icon">✈️</div>
+                <h3>Travel Assistance</h3>
+                <p>Complete travel arrangements including ticketing, accommodation, and relocation support for professionals.</p>
+            </div>
+            <div class="service-card">
+                <div class="service-icon">📋</div>
+                <h3>Documentation</h3>
+                <p>Professional assistance with credential evaluation, attestation, and all necessary employment documentation.</p>
+            </div>
+            <div class="service-card">
+                <div class="service-icon">🤝</div>
+                <h3>Career Counseling</h3>
+                <p>Expert guidance on career development, market insights, and strategic planning for your international career.</p>
+            </div>
+            <div class="service-card">
+                <div class="service-icon">📞</div>
+                <h3>24/7 Support</h3>
+                <p>Round-the-clock assistance for all your queries and concerns throughout your journey with us.</p>
+            </div>
+        </div>
+    </section>
+
+    <section id="destinations" class="section destinations">
+        <h2 class="section-title">Global Reach</h2>
+        <p class="section-subtitle">We connect talent with opportunities worldwide</p>
+        <div class="destinations-grid">
+            <div class="destination-card">
+                <div class="destination-content">
+                    <h3>🇶🇦 Qatar</h3>
+                    <p>Premium opportunities in the Gulf region</p>
+                </div>
+            </div>
+            <div class="destination-card">
+                <div class="destination-content">
+                    <h3>🇪🇺 Europe</h3>
+                    <p>Diverse careers across European nations</p>
+                </div>
+            </div>
+            <div class="destination-card">
+                <div class="destination-content">
+                    <h3>🇦🇪 UAE</h3>
+                    <p>Dynamic market in the Emirates</p>
+                </div>
+            </div>
+            <div class="destination-card">
+                <div class="destination-content">
+                    <h3>🇸🇦 Saudi Arabia</h3>
+                    <p>Growing opportunities in KSA</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="section stats">
+        <h2 class="section-title" style="color: white;">Our Track Record</h2>
+        <div class="stats-grid">
+            <div class="stat-item">
+                <h3>5000+</h3>
+                <p>Successful Placements</p>
+            </div>
+            <div class="stat-item">
+                <h3>25+</h3>
+                <p>Countries Served</p>
+            </div>
+            <div class="stat-item">
+                <h3>500+</h3>
+                <p>Partner Companies</p>
+            </div>
+            <div class="stat-item">
+                <h3>98%</h3>
+                <p>Client Satisfaction</p>
+            </div>
+        </div>
+    </section>
+
+    <section id="contact" class="section contact-section">
+        <h2 class="section-title">Get In Touch</h2>
+        <p class="section-subtitle">Let's start your journey to success</p>
+        <div class="contact-container">
+            <div class="contact-info">
+                <h3>Contact Information</h3>
+                <div class="contact-item">
+                    <div class="contact-icon">📍</div>
+                    <div>
+                        <strong>Office Address</strong>
+                        <p>Doha, Qatar</p>
+                    </div>
+                </div>
+                <div class="contact-item">
+                    <div class="contact-icon">📧</div>
+                    <div>
+                        <strong>Email</strong>
+                        <p>info@leadwise.com</p>
+                    </div>
+                </div>
+                <div class="contact-item">
+                    <div class="contact-icon">📞</div>
+                    <div>
+                        <strong>Phone</strong>
+                        <p>+974 XXXX XXXX</p>
+                    </div>
+                </div>
+                <div class="contact-item">
+                    <div class="contact-icon">🕐</div>
+                    <div>
+                        <strong>Working Hours</strong>
+                        <p>Sun - Thu: 8:00 AM - 6:00 PM</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="contact-form">
+                <form>
+                    <div class="form-group">
+                        <label>Full Name</label>
+                        <input type="text" placeholder="Enter your name" required>
+                    </div>
+                    <div class="form-group">
+                        <label>Email Address</label>
+                        <input type="email" placeholder="Enter your email" required>
+                    </div>
+                    <div class="form-group">
+                        <label>Service Interest</label>
+                        <select required>
+                            <option value="">Select a service</option>
+                            <option value="job">Job Placement</option>
+                            <option value="visa">Visa Services</option>
+                            <option value="travel">Travel Assistance</option>
+                            <option value="other">Other</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label>Message</label>
+                        <textarea placeholder="Tell us about your requirements" required></textarea>
+                    </div>
+                    <button type="submit" class="submit-btn">Send Message</button>
+                </form>
+            </div>
+        </div>
+    </section>
+
+    <footer class="footer">
+        <p>&copy; 2025 Leadwise International Consultancy Services. All rights reserved.</p>
+        <p>Bridging Talent with Opportunity Worldwide</p>
+    </footer>
+</body>
+</html>
