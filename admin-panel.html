@@ -35,6 +35,7 @@
         .logo {
             font-size: 1.5rem;
             font-weight: bold;
+            cursor: pointer;
         }
 
         .admin-info {
@@ -53,6 +54,22 @@
             justify-content: center;
             color: #1e3a8a;
             font-weight: bold;
+        }
+
+        .logout-btn {
+            background: rgba(255,255,255,0.2);
+            color: white;
+            border: 1px solid white;
+            padding: 0.5rem 1rem;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: all 0.3s;
+            margin-left: 1rem;
+        }
+
+        .logout-btn:hover {
+            background: white;
+            color: #1e3a8a;
         }
 
         .dashboard-container {
@@ -442,7 +459,8 @@
         }
 
         .form-group select,
-        .form-group textarea {
+        .form-group textarea,
+        .form-group input {
             width: 100%;
             padding: 0.8rem;
             border: 2px solid #e2e8f0;
@@ -480,6 +498,34 @@
             font-weight: 600;
         }
 
+        .notification {
+            position: fixed;
+            top: 100px;
+            right: 20px;
+            background: white;
+            padding: 1rem 1.5rem;
+            border-radius: 10px;
+            box-shadow: 0 5px 20px rgba(0,0,0,0.2);
+            display: none;
+            z-index: 1001;
+            animation: slideIn 0.3s ease;
+        }
+
+        .notification.show {
+            display: block;
+        }
+
+        @keyframes slideIn {
+            from {
+                transform: translateX(400px);
+                opacity: 0;
+            }
+            to {
+                transform: translateX(0);
+                opacity: 1;
+            }
+        }
+
         @media (max-width: 1200px) {
             .applications-table {
                 font-size: 0.9rem;
@@ -488,15 +534,20 @@
     </style>
 </head>
 <body>
+    <div class="notification" id="notification">
+        <div style="color: #22c55e; font-weight: 600;">✓ Changes saved successfully!</div>
+    </div>
+
     <header class="admin-header">
         <div class="header-content">
-            <div class="logo">LEADWISE Admin Panel</div>
+            <div class="logo" onclick="window.location.href='index.html'">LEADWISE Admin Panel</div>
             <div class="admin-info">
                 <div class="admin-avatar">SA</div>
                 <div>
                     <div style="font-weight: 600;">Sarah Admin</div>
                     <div style="font-size: 0.85rem; opacity: 0.9;">Administrator</div>
                 </div>
+                <button class="logout-btn" onclick="window.location.href='login.html'">Logout</button>
             </div>
         </div>
     </header>
@@ -557,7 +608,7 @@
                         <option>Germany</option>
                     </select>
                     <input type="date" placeholder="Date From">
-                    <button class="btn-export">📥 Export</button>
+                    <button class="btn-export" onclick="showNotification()">📥 Export</button>
                 </div>
             </div>
 
@@ -593,8 +644,8 @@
                         <td><span class="status-badge priority-high">High</span></td>
                         <td>
                             <div class="action-buttons">
-                                <button class="action-btn btn-view">View</button>
-                                <button class="action-btn btn-update" onclick="openModal()">Update</button>
+                                <button class="action-btn btn-view" onclick="showNotification()">View</button>
+                                <button class="action-btn btn-update" onclick="openModal('#APP-2025-245')">Update</button>
                             </div>
                         </td>
                     </tr>
@@ -616,8 +667,8 @@
                         <td><span class="status-badge priority-medium">Medium</span></td>
                         <td>
                             <div class="action-buttons">
-                                <button class="action-btn btn-view">View</button>
-                                <button class="action-btn btn-update" onclick="openModal()">Update</button>
+                                <button class="action-btn btn-view" onclick="showNotification()">View</button>
+                                <button class="action-btn btn-update" onclick="openModal('#APP-2025-244')">Update</button>
                             </div>
                         </td>
                     </tr>
@@ -639,8 +690,8 @@
                         <td><span class="status-badge priority-low">Low</span></td>
                         <td>
                             <div class="action-buttons">
-                                <button class="action-btn btn-view">View</button>
-                                <button class="action-btn btn-update" onclick="openModal()">Update</button>
+                                <button class="action-btn btn-view" onclick="showNotification()">View</button>
+                                <button class="action-btn btn-update" onclick="openModal('#APP-2025-243')">Update</button>
                             </div>
                         </td>
                     </tr>
@@ -662,8 +713,8 @@
                         <td><span class="status-badge priority-medium">Medium</span></td>
                         <td>
                             <div class="action-buttons">
-                                <button class="action-btn btn-view">View</button>
-                                <button class="action-btn btn-update" onclick="openModal()">Update</button>
+                                <button class="action-btn btn-view" onclick="showNotification()">View</button>
+                                <button class="action-btn btn-update" onclick="openModal('#APP-2025-242')">Update</button>
                             </div>
                         </td>
                     </tr>
@@ -685,8 +736,8 @@
                         <td><span class="status-badge priority-low">Low</span></td>
                         <td>
                             <div class="action-buttons">
-                                <button class="action-btn btn-view">View</button>
-                                <button class="action-btn btn-update" onclick="openModal()">Update</button>
+                                <button class="action-btn btn-view" onclick="showNotification()">View</button>
+                                <button class="action-btn btn-update" onclick="openModal('#APP-2025-241')">Update</button>
                             </div>
                         </td>
                     </tr>
@@ -707,10 +758,10 @@
         <div class="quick-actions">
             <h3>Quick Actions</h3>
             <div class="quick-actions-grid">
-                <button class="quick-action-btn">📊 Generate Report</button>
-                <button class="quick-action-btn">📧 Send Bulk Email</button>
-                <button class="quick-action-btn">👥 Add New Applicant</button>
-                <button class="quick-action-btn">⚙️ System Settings</button>
+                <button class="quick-action-btn" onclick="showNotification()">📊 Generate Report</button>
+                <button class="quick-action-btn" onclick="showNotification()">📧 Send Bulk Email</button>
+                <button class="quick-action-btn" onclick="showNotification()">👥 Add New Applicant</button>
+                <button class="quick-action-btn" onclick="showNotification()">⚙️ System Settings</button>
             </div>
         </div>
     </div>
@@ -724,11 +775,11 @@
             </div>
             <div class="form-group">
                 <label>Application ID</label>
-                <input type="text" value="#APP-2025-245" readonly style="width: 100%; padding: 0.8rem; border: 2px solid #e2e8f0; border-radius: 8px; background: #f8fafc;">
+                <input type="text" id="appId" readonly style="background: #f8fafc;">
             </div>
             <div class="form-group">
                 <label>Status</label>
-                <select>
+                <select id="statusSelect">
                     <option>Submitted</option>
                     <option>Under Review</option>
                     <option>Document Required</option>
@@ -753,24 +804,38 @@
             </div>
             <div class="form-group">
                 <label>
-                    <input type="checkbox" style="width: auto; margin-right: 0.5rem;">
+                    <input type="checkbox" style="width: auto; margin-right: 0.5rem;" checked>
                     Send email notification to applicant
                 </label>
             </div>
             <div class="modal-actions">
                 <button class="btn-cancel" onclick="closeModal()">Cancel</button>
-                <button class="btn-save">Save Changes</button>
+                <button class="btn-save" onclick="saveChanges()">Save Changes</button>
             </div>
         </div>
     </div>
 
     <script>
-        function openModal() {
+        function openModal(appId) {
+            document.getElementById('appId').value = appId;
             document.getElementById('updateModal').classList.add('active');
         }
 
         function closeModal() {
             document.getElementById('updateModal').classList.remove('active');
+        }
+
+        function saveChanges() {
+            closeModal();
+            showNotification();
+        }
+
+        function showNotification() {
+            const notification = document.getElementById('notification');
+            notification.classList.add('show');
+            setTimeout(() => {
+                notification.classList.remove('show');
+            }, 3000);
         }
 
         // Close modal when clicking outside
